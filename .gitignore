@@ -12,6 +12,7 @@
 /build
 /config
 /tests 
+/jsons
 
 # misc
 .DS_Store
