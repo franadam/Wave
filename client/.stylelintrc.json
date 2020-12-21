@@ -1,0 +1,21 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": "stylelint-config-standard",
+    "plugins": [
+      "stylelint-order"
+    ],
+    "rules": {
+      "order/order": [
+        "custom-properties",
+        "declarations"
+    ],
+    "order/properties-order": [
+        "width",
+        "height"
+    ],
+      "number-leading-zero": null
+    }
+}
