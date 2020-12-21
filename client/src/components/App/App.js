@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-import classes from './App.module.css';
+import { Routes } from './Routes';
 
 const App = () => {
   axios
@@ -10,7 +10,11 @@ const App = () => {
       console.log('res :>> ', res);
     })
     .catch((error) => console.log('error', error));
-  return <div className={classes.main}>My app</div>;
+  return (
+    <div className="container">
+      <Routes />
+    </div>
+  );
 };
 
 export default App;
