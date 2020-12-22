@@ -35,7 +35,7 @@ module.exports = function (grunt) {
     },
     watch: {
       files: ['Gruntfile.js', 'src/**/*.js', 'src/**/*.css'],
-      tasks: ['stylelint', 'eslint'],
+      tasks: ['eslint'],
     },
   });
 

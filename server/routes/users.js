@@ -32,17 +32,19 @@ router.post('/signup', async (req, res) => {
     const user = await new User(req.body);
     await user.save();
 
-    res.send({ succes: true });
+    res.send({ success: true });
   } catch (error) {
     res.status(500).send({ success: false, error: error.message });
   }
 });
 
-router.post('/login', async (req, res) => {
+router.post('/signin', async (req, res) => {
   try {
     const { email, password } = req.body;
     const errors = {};
+    console.log('email, password', email, password);
     const user = await User.findOne({ email });
+    console.log('user :>> ', user);
     if (!user) {
       errors.email = 'This user does not exist';
       throw new Error(errors.email);
@@ -56,18 +58,17 @@ router.post('/login', async (req, res) => {
         }
         user.generateToken((error, user) => {
           if (error) throw new Error(error.message);
-          res
-            .cookie('w_auth', user.token)
-            .status(200)
-            .json({ loginSuccess: true });
+          res.cookie('w_auth', user.token).status(200).json({ success: true });
         });
         if (error) throw new Error(error.message);
       } catch (error) {
-        res.send({ loginSuccess: false, error: error.message });
+        console.log('comparePassword ');
+        res.send({ success: false, error: error.message });
       }
     });
   } catch (error) {
-    res.send({ loginSuccess: false, error: error.message });
+    console.log('signin ');
+    res.send({ success: false, error: error.message });
   }
 });
 
