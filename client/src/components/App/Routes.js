@@ -2,6 +2,7 @@ import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Layout from '../../hoc/Layout/Layout';
+import AuthenticationCheck from '../../hoc/Authentication/AuthenticationCheck';
 import Home from '../Home/Home';
 import Authentication from '../Authentication/Authentication';
 import Signup from '../Authentication/Signup/Signup';
@@ -11,10 +12,22 @@ export const Routes = () => {
   return (
     <Layout>
       <Switch>
-        <Route path="/" exact component={Home} />
-        <Route path="/auth" exact component={Authentication} />
-        <Route path="/user/dashboard" exact component={Dashboard} />
-        <Route path="/signup" exact component={Signup} />
+        <Route path="/home" exact component={AuthenticationCheck(Home, null)} />
+        <Route
+          path="/auth"
+          exact
+          component={AuthenticationCheck(Authentication, false)}
+        />
+        <Route
+          path="/user/dashboard"
+          exact
+          component={AuthenticationCheck(Dashboard, true)}
+        />
+        <Route
+          path="/signup"
+          exact
+          component={AuthenticationCheck(Signup, false)}
+        />
         <Redirect to="/auth" />
       </Switch>
     </Layout>

@@ -3,16 +3,16 @@ import PropTypes from 'prop-types';
 import UserLayout from '../../hoc/Layout/UserLayout';
 import Button from '../UI/Button/Button';
 
-const Dashboard = (props) => {
+const Dashboard = ({ user }) => {
   return (
     <UserLayout>
       <div>
         <div className="user_nfo_panel">
           <h1>User Information</h1>
           <div>
-            <span>firstname</span>
-            <span>lastname</span>
-            <span>email</span>
+            <span>{user.info.firstname}</span>
+            <span>{user.info.lastname}</span>
+            <span>{user.info.email}</span>
           </div>
           <Button type="default" title="Edit profile" linkTo="/user/profile" />
         </div>
@@ -25,6 +25,8 @@ const Dashboard = (props) => {
   );
 };
 
-Dashboard.propTypes = {};
+Dashboard.propTypes = {
+  user: PropTypes.object,
+};
 
 export default Dashboard;

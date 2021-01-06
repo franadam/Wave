@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import { signin } from '../../../store/actions';
@@ -9,7 +10,6 @@ import {
   createFormFields,
   createFormToSubmit,
 } from '../../../utils/formActions';
-import { withRouter } from 'react-router-dom';
 
 export class Signin extends Component {
   state = {
@@ -67,6 +67,7 @@ export class Signin extends Component {
     if (isValid) {
       this.props.onSingin(dataToSubmit);
       this.props.history.push('/user/dashboard');
+      console.log('signin :>> ', dataToSubmit);
     } else {
       this.setState({
         formError: true,
