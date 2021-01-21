@@ -1,8 +1,9 @@
-import { CLEAR_ERROR, ERROR_AUTH, ERROR_USER } from '../actions/types';
+import { CLEAR_ERROR, ERROR_AUTH, ERROR_PRODUCT, ERROR_USER } from '../actions/types';
 
 const initialState = {
   auth: null,
   user: null,
+  product: null
 };
 
 const clearError = (state, slice) =>
@@ -14,6 +15,8 @@ const reducer = (state = initialState, { type, error, slice }) => {
       return Object.assign({}, { ...state, auth: error });
     case ERROR_USER:
       return Object.assign({}, { ...state, user: error });
+      case ERROR_PRODUCT:
+        return Object.assign({}, { ...state, product: error });
     case CLEAR_ERROR:
       return clearError(state, slice);
     default:

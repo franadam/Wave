@@ -1,4 +1,4 @@
-import { CLEAR_ERROR, ERROR_AUTH, ERROR_USER } from './types';
+import { CLEAR_ERROR, ERROR_AUTH, ERROR_PRODUCT, ERROR_USER } from './types';
 
 export const errorAuth = (error) => ({
   type: ERROR_AUTH,
@@ -7,6 +7,11 @@ export const errorAuth = (error) => ({
 
 export const errorUsers = (error) => ({
   type: ERROR_USER,
+  error,
+});
+
+export const errorProducts = (error) => ({
+  type: ERROR_PRODUCT,
   error,
 });
 

@@ -1,2 +1,5 @@
 export { signin, signup, logout, fetchCurrentUser } from './user';
-export { errorAuth, errorUsers, clearError } from './error';
+
+export {fetchWoods, fetchBrands, getProductByArrival, getProductBySell} from './product';
+
+export { errorAuth, errorUsers,errorProducts, clearError } from './error';

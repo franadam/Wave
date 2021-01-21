@@ -6,7 +6,10 @@ import AuthenticationCheck from '../../hoc/Authentication/AuthenticationCheck';
 import Home from '../Home/Home';
 import Authentication from '../Authentication/Authentication';
 import Signup from '../Authentication/Signup/Signup';
+
+
 import Dashboard from '../Dashboard/Dashboard';
+import Shop from '../Shop/Shop';
 
 export const Routes = () => {
   return (
@@ -27,6 +30,12 @@ export const Routes = () => {
           path="/signup"
           exact
           component={AuthenticationCheck(Signup, false)}
+        />
+        <Route
+        path="/shop"
+        exact
+        component={AuthenticationCheck(Shop, null)} 
+
         />
         <Redirect to="/auth" />
       </Switch>

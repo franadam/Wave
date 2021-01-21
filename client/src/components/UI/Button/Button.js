@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {FaShoppingCart} from 'react-icons/all';
 
 const Button = (props) => {
   const buttons = () => {
@@ -8,12 +9,19 @@ const Button = (props) => {
     switch (props.type) {
       case 'default':
         template = (
-          <Link className="link_default" to={props.linkTo} {...props.addStyles}>
+          <Link className={!props.altClass ? "link_default" : props.altClass} to={props.linkTo} {...props.addStyles}>
             {props.title}
           </Link>
         );
         break;
+      case 'bag_link':
+        template = <div className="bag_link"
+        onClick={() => props.runAction()}
+        >
+              <FaShoppingCart />
 
+        </div>
+        break;
       default:
         template = '';
         break;
@@ -28,7 +36,9 @@ Button.propTypes = {
   type: PropTypes.string,
   linkTo: PropTypes.string,
   title: PropTypes.string,
+  altClass: PropTypes.string,
   addStyles: PropTypes.objectOf(PropTypes.string),
+  runAction: PropTypes.func
 };
 
 export default Button;

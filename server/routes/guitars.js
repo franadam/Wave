@@ -28,16 +28,16 @@ router.get('/', async (req, res) => {
     const limit = l ? parseInt(l) : 100;
     const skip = s ? parseInt(s) : 0;
 
-    const guitar = await Guitar.find()
+    const guitars = await Guitar.find()
       .populate('brand')
       .populate('wood')
       .sort([[sortBy, order]])
       .limit(limit)
       .skip(skip);
 
-    if (!guitar) throw new Error('No guitar found');
+    if (!guitars) throw new Error('No guitar found');
 
-    res.status(200).json({ success: true, guitar });
+    res.status(200).json({ success: true, guitars });
   } catch (error) {
     res.status(400).json({ success: false, error: error.message });
   }
