@@ -17,7 +17,7 @@ export const frests = [
   }
 ]
 
-export const prices = [
+export const price = [
   {
     _id: 0,
     name: "Any",

@@ -2,21 +2,24 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Card from '../Card/Card'
 
-const CradsBlock = ({list, title}) => {
+const CradsBlockShop = ({list, title, grid}) => {
   const renderCards = (cards) => (
     cards.length
-    ? cards.map((card, idx) => 
+    ? cards.map((card) => 
     (
       <Card
-      key = {idx}
+      key = {card._id}
       {...card}
+      grid={grid}
       />
-    ))
-    : null
+    )).slice(0,6)
+    : <div className="no_result">
+      Sorry, no results
+    </div>
   )
 
   return (
-    <div className='card_block'>
+    <div className='card_block_shop'>
       <div className="container">
         {
           title 
@@ -40,9 +43,10 @@ const CradsBlock = ({list, title}) => {
   )
 }
 
-CradsBlock.propTypes = {
+CradsBlockShop.propTypes = {
   title: PropTypes.string,
+  grid: PropTypes.string,
   list: PropTypes.array
 }
 
-export default CradsBlock
+export default CradsBlockShop

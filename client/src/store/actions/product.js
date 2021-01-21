@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { errorProducts, clearError } from './';
 
-import { FETCH_GUITARS_BY_ARRIVAL, FETCH_GUITARS_BY_SELL, FETCH_BRANDS, FETCH_WOODS } from './types';
+import { FETCH_GUITARS_BY_ARRIVAL, FETCH_GUITARS_BY_SELL, FETCH_BRANDS, FETCH_WOODS, PURCHASE_GUITARS } from './types';
 
 const getBrands = (brands) => ({
   type: FETCH_BRANDS,
@@ -14,14 +14,19 @@ const getWoods = (woods) => ({
   woods
 })
 
-const productReadByArrival = (products) => ({
-  type: FETCH_GUITARS_BY_ARRIVAL,
-  products
+const productReadBySell = (guitars) => ({
+  type: FETCH_GUITARS_BY_SELL,
+  guitars
 })
 
-const productReadBySell = (products) => ({
-  type: FETCH_GUITARS_BY_SELL,
-  products
+const productReadByArrival = (guitars) => ({
+  type: FETCH_GUITARS_BY_ARRIVAL,
+  guitars
+})
+
+const getGuitarsToShop = ({size, articles}) => ({
+  type: PURCHASE_GUITARS,
+  size, articles
 })
 
 export const fetchBrands = () => async (dispatch) => {
@@ -42,7 +47,7 @@ export const fetchWoods = () => async (dispatch) => {
     dispatch(errorProducts(error.message))
   }}
 
-export const getProductByArrival = () => async (dispatch) => {
+export const getGuitarsByArrival = () => async (dispatch) => {
   try {
     const res = await axios.get(`/api/products/guitars?sortBy=createdAt&order=desc&limit=50&skip=0`)
     dispatch(productReadByArrival(res.data.guitars))
@@ -52,10 +57,26 @@ export const getProductByArrival = () => async (dispatch) => {
   }
 }
 
-export const getProductBySell = () => async (dispatch) => {
+export const getGuitarsBySell = () => async (dispatch) => {
   try {
     const res = await axios.get(`/api/products/guitars?sortBy=sold&order=desc&limit=50&skip=0`)
     dispatch(productReadBySell(res.data.guitars))
+    dispatch(clearError('product'));
+  } catch (error) {
+    dispatch(errorProducts(error.message))
+  }
+}
+
+export const purchaseGuitars = (skip, limit, filters=[], previousState=[]) => async (dispatch) => {
+  try {
+    const data = {skip, limit, filters}
+    const res = await axios.post(`/api/products/shop`, data)
+    const {size, articles} = res.data;
+    const newState = [
+      ...previousState,
+      ...articles
+    ]
+    dispatch(getGuitarsToShop({size, articles: newState}))
     dispatch(clearError('product'));
   } catch (error) {
     dispatch(errorProducts(error.message))

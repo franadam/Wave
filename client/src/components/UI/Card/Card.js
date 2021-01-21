@@ -34,7 +34,7 @@ export class Card extends Component {
           <div className="tags">
             <div className="brand">{props.brand.name}</div>
             <div className="name">{props.name}</div>
-            <div className="price">€{props.price}</div>
+            <div className="name">€{props.price}</div>
           </div>
           {
             props.grid
@@ -42,7 +42,7 @@ export class Card extends Component {
             : null
           }
           <div className="actions">
-            <div className="button_wrapper">
+            <div className="button_wrapp">
               <Button
                 type="default"
                 altClass="card_link"
@@ -53,7 +53,7 @@ export class Card extends Component {
                 }}
               />
             </div>
-            <div className="button_wrapper">
+            <div className="button_wrapp">
               <Button 
                 type="bag_link"
                 runAction={()=> {

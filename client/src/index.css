@@ -463,7 +463,8 @@ footer .business_nfo .nfo {
   margin: 110px 0;
 }
 
-.card_block .title {
+.card_block .title,
+.card_block_shop .title {
   text-transform: uppercase;
   text-align: center;
   font-size: 25px;

@@ -7,13 +7,13 @@ import HomePromotion from './HomePromotion';
 import CradsBlock from '../UI/CradsBlock/CradsBlock';
 
 
-import {fetchProducts, getProductByArrival, getProductBySell} from '../../store/actions'
+import {getGuitarsByArrival, getGuitarsBySell} from '../../store/actions'
 
 export class Home extends Component {
 
   componentDidMount() {
-    this.props.onGetProductByArrival()
-    this.props.onGetProductBySell()
+    this.props.onGetGuitarsByArrival()
+    this.props.onGetGuitarsBySell()
   }
 
   render() {
@@ -39,15 +39,15 @@ const mapStateToProps = ({product}) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onGetProductByArrival : () => dispatch(getProductByArrival()),
-  onGetProductBySell : () => dispatch(getProductBySell())
+  onGetGuitarsByArrival : () => dispatch(getGuitarsByArrival()),
+  onGetGuitarsBySell : () => dispatch(getGuitarsBySell())
 })
 
 
 Home.propTypes = {
   products: PropTypes.object,
-  onGetProductByArrival : PropTypes.func,
-  onGetProductBySell : PropTypes.func
+  onGetGuitarsByArrival : PropTypes.func,
+  onGetGuitarsBySell : PropTypes.func
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

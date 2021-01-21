@@ -5,19 +5,21 @@ import PropTypes from 'prop-types'
 import ShopHeader from './ShopHeader'
 import CollapseCheckbox from '../UI/CollapseCheckbox/CollapseCheckbox'
 
-import {fetchBrands, fetchWoods} from '../../store/actions'
-import { frests, prices } from '../../utils/filterCategories'
+import {fetchBrands, fetchWoods, purchaseGuitars} from '../../store/actions'
+import { frests, price } from '../../utils/filterCategories'
 import CollapseRadio from '../UI/CollapseRadio/CollapseRadio'
+import LoadMoreCards from './LoadMoreCards';
+import { FaBars, FaTh } from 'react-icons/fa'
 
 export class Shop extends Component {
   state = {
     grid: '',
-    limit: 10,
+    limit: 6,
     skip: 0,
     filters : {
-      brands : [],
-      woods: [],
-      prices: [],
+      brand : [],
+      wood: [],
+      price: [],
       frets: []
     }
   } 
@@ -25,10 +27,12 @@ export class Shop extends Component {
   componentDidMount() {
     this.props.onFetchBrands()
     this.props.onFetchWoods()
+    const {skip, limit, filters} = this.state;
+    this.props.onPurchaseGuitars(skip, limit, filters)
   }
 
   priceHandler = (value) => {
-    const data = [...prices]
+    const data = [...price]
     let array = []
     for(let key in data) {
       if (data[key]._id === parseInt(value, 10)) {
@@ -38,23 +42,45 @@ export class Shop extends Component {
     return array
   }
 
+  showFilteredResults = (filters) => {
+    this.props.onPurchaseGuitars(0, this.state.limit, filters)
+  }
+
   handleFilter = (filters, category) => {
     const newFilters = {...this.state.filters}
     newFilters[category] = filters;
 
-    if (category === 'prices') {
+    if (category === 'price') {
       let priceValues = this.priceHandler(filters)
       newFilters[category] = priceValues;
-  }
+    }
+  
+    console.log('newFilters :>> ', newFilters);
+    this.showFilteredResults(newFilters);
 
     this.setState({
       filters: newFilters
     })
   }
 
+  loadMoreCards = () => {
+    let {skip, limit, filters} = this.state;
+    skip += limit ;
+    this.props.onPurchaseGuitars(skip, limit, filters, this.props.products.toShop)
+
+    this.setState({skip})
+  }
+
+  gridHandler = () => {
+    this.setState(prevState => ({
+      grid: !prevState.grid ? 'grid_bars' : ''
+  }));
+  }
+
   render() {
     console.log('this.state.filters :>> ', this.state.filters);
-    const products = this.props.products
+    const products = this.props.products;
+    const {grid, skip, limit} = this.state;
     return (
       <div>
         <ShopHeader 
@@ -67,7 +93,7 @@ export class Shop extends Component {
               initState={true}
               title='Brands'
               list={products.brands}
-              handleFilter= {(filter) => this.handleFilter(filter, 'brands')}
+              handleFilter= {(filter) => this.handleFilter(filter, 'brand')}
             />
             <CollapseCheckbox 
               initState={false}
@@ -79,16 +105,39 @@ export class Shop extends Component {
               initState={false}
               title='Woods'
               list={products.woods}
-              handleFilter= {(filter) => this.handleFilter(filter, 'woods')}
+              handleFilter= {(filter) => this.handleFilter(filter, 'wood')}
             />
             <CollapseRadio 
               initState={false}
               title='Prices'
-              list={prices}
-              handleFilter= {(filter) => this.handleFilter(filter, 'prices')}
+              list={price}
+              handleFilter= {(filter) => this.handleFilter(filter, 'price')}
               />
             </div>
-            <div className="right">R</div>
+            <div className="right">
+              <div className="shop_options">
+                <div className="shop_grids clear">
+                  <div className={`grid_btn ${grid? '': 'active'}`}
+                  onClick={() => this.gridHandler()}>
+                    <FaTh />
+                  </div>
+                  <div className={`grid_btn ${!grid? '': 'active'}`}
+                  onClick={() => this.gridHandler()}>
+                    <FaBars />
+                  </div>
+                </div>
+              </div>
+              <div>
+                <LoadMoreCards
+                  grid={grid}
+                  skip= {skip}
+                  limit={limit}
+                  list={products.toShop || []}
+                  size={products.toShopSize || 0}
+                  loadMore={() => this.loadMoreCards()}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -102,13 +151,15 @@ const mapStateToProps = ({product}) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   onFetchBrands : () => dispatch(fetchBrands()), 
-  onFetchWoods : () => dispatch(fetchWoods())
+  onFetchWoods : () => dispatch(fetchWoods()),
+  onPurchaseGuitars : (skip, limit, filters, prevState) => dispatch(purchaseGuitars(skip, limit, filters, prevState))
 })
 
 Shop.propTypes = {
   products: PropTypes.object,
   onFetchBrands: PropTypes.func,
   onFetchWoods: PropTypes.func,
+  onPurchaseGuitars: PropTypes.func,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Shop)
