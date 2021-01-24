@@ -12,7 +12,7 @@ const CradsBlockShop = ({list, title, grid}) => {
       {...card}
       grid={grid}
       />
-    )).slice(0,6)
+    ))
     : <div className="no_result">
       Sorry, no results
     </div>

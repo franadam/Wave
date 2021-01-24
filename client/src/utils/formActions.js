@@ -154,3 +154,28 @@ export const showPassword = () => {
     x.type = 'password';
   }
 };
+
+export const populateOptionsField = (formData, array=[], field) => {
+  const newFormData = {...formData};
+  const newArray = array.map(item => ({key:item._id, value:item.name}));
+  newFormData[field].config.options = newArray;
+  return newFormData
+}
+
+export const resetFields = (formData, formName) => {
+  const newFormData = {...formData};
+
+  for (let key in newFormData) {
+    if (key === 'images') {
+      newFormData[key].value = [];
+    }
+    else {
+      newFormData[key].value = '';
+    }
+    newFormData[key].valid = false;
+    newFormData[key].touched = false;
+    newFormData[key].validationMessage = '';
+  }
+
+  return newFormData
+}

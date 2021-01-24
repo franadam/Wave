@@ -1,6 +1,15 @@
 const express = require('express');
+const cloudinary = require('cloudinary');
+const formidable = require('express-formidable');
 const User = require('../models/User');
+const admin = require('../middlewares/admin');
 const auth = require('../middlewares/auth');
+
+cloudinary.config({
+  cloud_name:process.env.CLOUDINARY_NAME,
+  api_key:process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+})
 
 const router = express.Router();
 
@@ -71,5 +80,28 @@ router.post('/signin', async (req, res) => {
     res.send({ success: false, error: error.message });
   }
 });
+
+router.post('/uploadimage', auth, admin, formidable(), (req, res) => {
+  cloudinary.uploader.upload(req.files.file.path, (result) => {
+    console.log('result :>> ', result);
+    res.status(200).send({
+      public_id : result.public_id,
+      url : result.url
+    })
+  }, {
+    public_id: `${Date.now()}`,
+    resource_type: 'auto',
+    format: 'png'
+  })
+})
+
+router.get('/removeimage', auth, admin, (req, res) => {
+  const {public_id} = req.query;
+  cloudinary.uploader.destroy(public_id, (error, result) => {
+    if (error) return res.json({success:false, error});
+    res.status(200).send('OK');
+    console.log('remove :>> ', public_id);
+  })
+})
 
 module.exports = router;

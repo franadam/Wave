@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { errorProducts, clearError } from './';
 
-import { FETCH_GUITARS_BY_ARRIVAL, FETCH_GUITARS_BY_SELL, FETCH_BRANDS, FETCH_WOODS, PURCHASE_GUITARS } from './types';
+import { FETCH_GUITARS_BY_ARRIVAL, FETCH_GUITARS_BY_SELL, FETCH_BRANDS, FETCH_WOODS, PURCHASE_GUITARS, GUITAR_CREATE, CLEAR_GUITAR, BRAND_CREATE, WOOD_CREATE } from './types';
 
 const getBrands = (brands) => ({
   type: FETCH_BRANDS,
@@ -27,6 +27,25 @@ const productReadByArrival = (guitars) => ({
 const getGuitarsToShop = ({size, articles}) => ({
   type: PURCHASE_GUITARS,
   size, articles
+})
+
+const createGuitar = (addGuitar) => ({
+  type: GUITAR_CREATE,
+  addGuitar
+})
+
+const createBrand = (brand) => ({
+  type: BRAND_CREATE,
+  brand
+})
+
+const createWood = (wood) => ({
+  type: WOOD_CREATE,
+  wood
+})
+
+export const clearGuitar = () => ({
+  type: CLEAR_GUITAR,
 })
 
 export const fetchBrands = () => async (dispatch) => {
@@ -77,6 +96,36 @@ export const purchaseGuitars = (skip, limit, filters=[], previousState=[]) => as
       ...articles
     ]
     dispatch(getGuitarsToShop({size, articles: newState}))
+    dispatch(clearError('product'));
+  } catch (error) {
+    dispatch(errorProducts(error.message))
+  }
+}
+
+export const addGuitar = (guitar) => async (dispatch) => {
+  try {
+    const res = await axios.post(`/api/products/guitars`, guitar)
+    dispatch(createGuitar(res.data.guitar))
+    dispatch(clearError('product'));
+  } catch (error) {
+    dispatch(errorProducts(error.message))
+  }
+}
+
+export const addBrand = (brand) => async (dispatch) => {
+  try {
+    const res = await axios.post(`/api/products/brands`, brand)
+    dispatch(createBrand(res.data.brand))
+    dispatch(clearError('product'));
+  } catch (error) {
+    dispatch(errorProducts(error.message))
+  }
+}
+
+export const addWood = (wood) => async (dispatch) => {
+  try {
+    const res = await axios.post(`/api/products/woods`, wood)
+    dispatch(createWood(res.data.wood))
     dispatch(clearError('product'));
   } catch (error) {
     dispatch(errorProducts(error.message))

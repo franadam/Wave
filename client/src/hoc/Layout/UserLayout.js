@@ -1,11 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux'
 
 const links = [
   { name: 'My Dashboar', linkTo: '/user/dashboar' },
   { name: 'My Profile', linkTo: '/user/profile' },
   { name: 'My Basket', linkTo: '/user/basket' },
+];
+
+const admin = [
+  { name: 'Site Info', linkTo: '/admin/site_info' },
+  { name: 'Add Products', linkTo: '/admin/add_product' },
+  { name: 'Manage categories', linkTo: '/admin/manage_categories' },
 ];
 
 const UserLayout = (props) => {
@@ -22,6 +29,16 @@ const UserLayout = (props) => {
         <div className="user_left_nav">
           <h2>My Account</h2>
           <div className="links">{generateLinks(links)}</div>
+          {
+            props.user.info.isAdmin
+            ? (
+              <div>
+          <h2>Admin</h2>
+          <div className="links">{generateLinks(admin)}</div>
+          </div>
+            )
+            : null
+          }
         </div>
         <div className="user_right">{props.children}</div>
       </div>
@@ -31,6 +48,15 @@ const UserLayout = (props) => {
 
 UserLayout.propTypes = {
   children: PropTypes.node,
+  user: PropTypes.object
 };
 
-export default UserLayout;
+const mapStateToProps = ({user}) => ({
+  user
+})
+
+const mapDispatchToProps = ({
+  
+})
+
+export default connect(mapStateToProps)(UserLayout);

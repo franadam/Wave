@@ -20,7 +20,7 @@ export class Signup extends Component {
         element: 'input',
         value: '',
         config: {
-          name: 'fullname',
+          name: 'firstname',
           type: 'text',
           placeholder: 'Enter your firstname',
         },
@@ -35,7 +35,7 @@ export class Signup extends Component {
         element: 'input',
         value: '',
         config: {
-          name: 'fullname',
+          name: 'lastname',
           type: 'text',
           placeholder: 'Enter your lastname',
         },

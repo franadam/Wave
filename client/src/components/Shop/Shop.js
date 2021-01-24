@@ -55,7 +55,6 @@ export class Shop extends Component {
       newFilters[category] = priceValues;
     }
   
-    console.log('newFilters :>> ', newFilters);
     this.showFilteredResults(newFilters);
 
     this.setState({
@@ -78,7 +77,6 @@ export class Shop extends Component {
   }
 
   render() {
-    console.log('this.state.filters :>> ', this.state.filters);
     const products = this.props.products;
     const {grid, skip, limit} = this.state;
     return (

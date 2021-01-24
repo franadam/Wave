@@ -32,6 +32,8 @@ router.post('/', async (req, res) => {
       }
     }
 
+    filters.publish = true
+
     const guitars = await Guitar.find(filters)
       .populate('brand')
       .populate('wood')
@@ -40,8 +42,6 @@ router.post('/', async (req, res) => {
       .skip(skip);
 
     if (!guitars) throw new Error('No guitar found');
-
-    console.log('guitars :>> ', filters);
 
     res.status(200).json({ success: true, size: guitars.length, articles: guitars });
   } catch (error) {

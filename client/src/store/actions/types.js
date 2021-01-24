@@ -10,15 +10,23 @@ export const USER_READ = 'USER_READ';
 export const USER_UPDATE = 'USER_UPDATE';
 export const USER_DELETE = 'USER_DELETE';
 
-export const FETCH_BRANDS = 'FETCH_BRANDS';
-export const FETCH_WOODS = 'FETCH_WOODS';
 export const FETCH_GUITARS_BY_SELL = 'FETCH_GUITARS_BY_SELL';
 export const FETCH_GUITARS_BY_ARRIVAL = 'FETCH_GUITARS_BY_ARRIVAL';
+export const GUITAR_CREATE = 'GUITAR_CREATE';
+export const GUITAR_UPDATE = 'GUITAR_UPDATE';
+export const GUITAR_DELETE = 'GUITAR_DELETE';
+export const CLEAR_GUITAR = 'CLEAR_GUITAR';
 export const PURCHASE_GUITARS = 'PURCHASE_GUITARS';
 
-export const PRODUCT_CREATE = 'PRODUCT_CREATE';
-export const PRODUCT_UPDATE = 'PRODUCT_UPDATE';
-export const PRODUCT_DELETE = 'PRODUCT_DELETE';
+export const FETCH_BRANDS = 'FETCH_BRANDS';
+export const BRAND_CREATE = 'BRAND_CREATE';
+export const BRAND_UPDATE = 'BRAND_UPDATE';
+export const BRAND_DELETE = 'BRAND_DELETE';
+
+export const FETCH_WOODS = 'FETCH_WOODS';
+export const WOOD_CREATE = 'WOOD_CREATE';
+export const WOOD_UPDATE = 'WOOD_UPDATE';
+export const WOOD_DELETE = 'WOOD_DELETE';
 
 export const ERROR_AUTH = 'ERROR_AUTH';
 export const ERROR_USER = 'ERROR_USER';

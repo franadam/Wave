@@ -18,6 +18,11 @@ const FormField = ({ field, id, change }) => {
       case 'input':
         formTemplate = (
           <div className="formBlock">
+            {
+              field.showLabel
+              ? <div className="label_inputs">{field.config.label.toUpperCase()}</div>
+              : null
+            }
             <input
               {...field.config}
               value={field.value}
@@ -29,6 +34,51 @@ const FormField = ({ field, id, change }) => {
         );
         break;
 
+        case 'textarea':
+          formTemplate = (
+            <div className="formBlock">
+              {
+                field.showLabel
+                ? <div className="label_inputs">{field.config.label.toUpperCase()}</div>
+                : null
+              }
+              <textarea
+                {...field.config}
+                value={field.value}
+                onBlur={(event) => change({ event, id, blur: true })}
+                onChange={(event) => change({ event, id })}
+              />
+              {showError()}
+            </div>
+          );
+          break
+
+          case 'select':
+            formTemplate = (
+              <div className="formBlock">
+                {
+                  field.showLabel
+                  ? <div className="label_inputs">{field.config.label.toUpperCase()}</div>
+                  : null
+                }
+                <select
+                  value={field.value}
+                  onBlur={(event) => change({ event, id, blur: true })}
+                  onChange={(event) => change({ event, id })}
+                >
+                  <option value="">Select One</option>
+                  {
+                    field.config.options.map(option => (
+                      <option key={option.key} value={option.key}>
+                        {option.value}
+                      </option>
+                    ))
+                  }
+                </select>
+                {showError()}
+              </div>
+            );
+            break;
       default:
         formTemplate = null;
         break;
