@@ -1,17 +1,12 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
 import Button from '../Button/Button'
 
+import {addGuitarToBasket} from '../../../store/actions';
+
 export class Card extends Component {
-  static propTypes = {
-    grid: PropTypes.string, 
-    images: PropTypes.array,
-    brand: PropTypes.object,
-    name: PropTypes.string,
-    price: PropTypes.number,
-    description: PropTypes.string,
-    _id: PropTypes.string
-  }
 
   renderCardImage(images) {
     if (images.length > 0) {
@@ -47,7 +42,7 @@ export class Card extends Component {
                 type="default"
                 altClass="card_link"
                 title="View Products"
-                linkTo={`/product_detail/${props._id}`}
+                linkTo={`/guitar/${props._id}`}
                 addStyles={{
                   margin: "10px 0 0 0"
                 }}
@@ -57,6 +52,9 @@ export class Card extends Component {
               <Button 
                 type="bag_link"
                 runAction={()=> {
+                  props.user.info.isAuth
+                  ? props.onAddGuitarToBasket(props._id)
+                  :
                   console.log('added to cart')
                 }}
               />
@@ -68,4 +66,25 @@ export class Card extends Component {
   }
 }
 
-export default Card
+const mapStateToProps = ({user}) => ({
+  user
+})
+
+const mapDispatchToProps = dispatch => ({
+  onAddGuitarToBasket : (id) => dispatch(addGuitarToBasket(id))
+}
+)
+
+Card.propTypes = {
+  _id: PropTypes.string,
+  grid: PropTypes.string, 
+  images: PropTypes.array,
+  brand: PropTypes.object,
+  user: PropTypes.object,
+  name: PropTypes.string,
+  price: PropTypes.number,
+  description: PropTypes.string,
+  onAddGuitarToBasket: PropTypes.func
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card)

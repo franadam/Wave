@@ -22,6 +22,17 @@ const Button = (props) => {
 
         </div>
         break;
+      case 'add_to_cart_link':
+        template = (
+          <div 
+            className="add_to_cart_link"
+            onClick={() => props.runAction()}
+          >
+            <FaShoppingCart />
+            Add to Basket
+          </div>
+        )
+        break;
       default:
         template = '';
         break;

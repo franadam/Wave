@@ -6,6 +6,7 @@ import UserLayout from '../../../hoc/Layout/UserLayout'
 import FileUpload from '../../UI/Form/FileUpload';
 
 import {fetchBrands, fetchWoods, addGuitar, clearGuitar} from '../../../store/actions';
+import { objectToArray } from '../../../utils/objectTransorm';
 
 import {
   update,
@@ -202,8 +203,8 @@ export class AddProduct extends Component {
     setTimeout(() => {
       const {formData} = this.state;
       const {brands, woods} = this.props.products
-      let newFormData = populateOptionsField(formData, brands , 'brand')
-      newFormData = populateOptionsField(formData, woods , 'wood')
+      let newFormData = populateOptionsField(formData, objectToArray(brands) , 'brand')
+      newFormData = populateOptionsField(formData, objectToArray(woods) , 'wood')
       this.setState({ formData: newFormData });
   }, 1000);
   }

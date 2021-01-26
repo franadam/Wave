@@ -3,6 +3,7 @@ import {
   AUTH_SIGNUP,
   AUTH_LOGOUT,
   USER_READ,
+  USER_ADD_GUITAR_TO_BASKET
 } from '../actions/types';
 
 const initialState = {
@@ -12,11 +13,7 @@ const initialState = {
   info: {},
 };
 
-const logout = (state, success) => {
-  return { ...initialState, logout: success };
-};
-
-const reducer = (state = initialState, { type, success, user }) => {
+const reducer = (state = initialState, { type, success, user, basket }) => {
   switch (type) {
     case AUTH_SIGNIN:
       return { ...state, signup: true, signin: success };
@@ -29,6 +26,9 @@ const reducer = (state = initialState, { type, success, user }) => {
 
     case AUTH_LOGOUT:
       return { ...state, logout: success };
+
+    case USER_ADD_GUITAR_TO_BASKET:
+      return { ...state, info: {...state.info, basket }};
     default:
       return state;
   }

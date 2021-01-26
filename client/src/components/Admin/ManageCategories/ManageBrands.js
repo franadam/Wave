@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import {fetchBrands, addBrand} from '../../../store/actions';
+import { objectToArray } from '../../../utils/objectTransorm';
 
 import {
   update,
@@ -42,7 +43,7 @@ export class ManageBrands extends Component {
     const {brands} = this.props.products;
     return( 
       brands 
-      ? brands.map(brand => <div key={brand._id} className="category_item" >
+      ? objectToArray(brands).map(brand => <div key={brand._id} className="category_item" >
         {brand.name}
       </div>)
       : null

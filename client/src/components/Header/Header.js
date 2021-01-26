@@ -68,10 +68,10 @@ export class Header extends Component {
     );
 
   basketLink(link) {
-    const { user } = this.props;
+    const info = this.props.user.info;
     return (
       <div className="cart_link" key={link.linkTo}>
-        <span>{user.basket ? user.basket.length : 0}</span>
+        <span>{info.basket ? info.basket.length : 0}</span>
         <Link to={link.linkTo}>{link.name}</Link>
       </div>
     );

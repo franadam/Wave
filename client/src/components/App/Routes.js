@@ -11,6 +11,7 @@ import Home from '../Home/Home';
 import Authentication from '../Authentication/Authentication';
 import Signup from '../Authentication/Signup/Signup';
 import Shop from '../Shop/Shop';
+import Guitar from '../Guitar/Guitar';
 
 export const Routes = () => {
   return (
@@ -32,6 +33,7 @@ export const Routes = () => {
           component={AuthenticationCheck(ManageCategories, true)}
         />
 
+        <Route path="/guitar/:id" exact component={AuthenticationCheck(Guitar, null)} />
         <Route path="/home" exact component={AuthenticationCheck(Home, null)} />
         <Route
           path="/auth"

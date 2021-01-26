@@ -14,7 +14,6 @@ export default function (Cpt, reload, adminRoute) {
 
     componentDidMount() {
       this.props.fetchCurrentUser();
-      console.log('AuthenticationCheck this.props.user :>> ', this.props.user);
 
       if (!this.props.user.info.isAuth || this.props.user.logout) {
         if (reload) {

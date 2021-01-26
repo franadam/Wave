@@ -493,8 +493,7 @@ footer .business_nfo .nfo {
 .card_item_wrapper .image {
   width: 100%;
   height: 280px;
-  background-position: center !important;
-  background-size: cover !important;
+  background-position: center !important;background-size: contain !important;
   border: 1px solid #f0f0f0;
 }
 

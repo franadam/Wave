@@ -2,7 +2,12 @@ import axios from 'axios';
 
 import { errorProducts, clearError } from './';
 
-import { FETCH_GUITARS_BY_ARRIVAL, FETCH_GUITARS_BY_SELL, FETCH_BRANDS, FETCH_WOODS, PURCHASE_GUITARS, GUITAR_CREATE, CLEAR_GUITAR, BRAND_CREATE, WOOD_CREATE } from './types';
+import {FETCH_GUITARS, FETCH_GUITARS_BY_ARRIVAL, FETCH_GUITARS_BY_SELL, FETCH_BRANDS, FETCH_WOODS, PURCHASE_GUITARS, GUITAR_CREATE, CLEAR_GUITAR, BRAND_CREATE, WOOD_CREATE } from './types';
+
+const getGuitars = (guitars) => ({
+  type: FETCH_GUITARS,
+  guitars
+})
 
 const getBrands = (brands) => ({
   type: FETCH_BRANDS,
@@ -66,10 +71,21 @@ export const fetchWoods = () => async (dispatch) => {
     dispatch(errorProducts(error.message))
   }}
 
+export const fetchGuitars = () => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/products/guitars`)
+    dispatch(getGuitars(res.data.guitars))
+    dispatch(clearError('product'));
+  } catch (error) {
+    dispatch(errorProducts(error.message))
+  }
+}
+
 export const getGuitarsByArrival = () => async (dispatch) => {
   try {
     const res = await axios.get(`/api/products/guitars?sortBy=createdAt&order=desc&limit=50&skip=0`)
     dispatch(productReadByArrival(res.data.guitars))
+    dispatch(getGuitars(res.data.guitars))
     dispatch(clearError('product'));
   } catch (error) {
     dispatch(errorProducts(error.message))

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import {fetchWoods, addWood} from '../../../store/actions';
+import { objectToArray } from '../../../utils/objectTransorm';
 
 import {
   update,
@@ -42,7 +43,7 @@ export class ManageWoods extends Component {
     const {woods} = this.props.products;
     return( 
       woods 
-      ? woods.map(wood => <div key={wood._id} className="category_item" >
+      ? objectToArray(woods).map(wood => <div key={wood._id} className="category_item" >
         {wood.name}
       </div>)
       : null

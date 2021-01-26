@@ -4,6 +4,7 @@ const formidable = require('express-formidable');
 const User = require('../models/User');
 const admin = require('../middlewares/admin');
 const auth = require('../middlewares/auth');
+const mongooseTypes = require('mongoose').Types;
 
 cloudinary.config({
   cloud_name:process.env.CLOUDINARY_NAME,
@@ -51,9 +52,7 @@ router.post('/signin', async (req, res) => {
   try {
     const { email, password } = req.body;
     const errors = {};
-    console.log('email, password', email, password);
     const user = await User.findOne({ email });
-    console.log('user :>> ', user);
     if (!user) {
       errors.email = 'This user does not exist';
       throw new Error(errors.email);
@@ -71,19 +70,16 @@ router.post('/signin', async (req, res) => {
         });
         if (error) throw new Error(error.message);
       } catch (error) {
-        console.log('comparePassword ');
         res.send({ success: false, error: error.message });
       }
     });
   } catch (error) {
-    console.log('signin ');
     res.send({ success: false, error: error.message });
   }
 });
 
 router.post('/uploadimage', auth, admin, formidable(), (req, res) => {
   cloudinary.uploader.upload(req.files.file.path, (result) => {
-    console.log('result :>> ', result);
     res.status(200).send({
       public_id : result.public_id,
       url : result.url
@@ -91,7 +87,7 @@ router.post('/uploadimage', auth, admin, formidable(), (req, res) => {
   }, {
     public_id: `${Date.now()}`,
     resource_type: 'auto',
-    format: 'png'
+    format: 'png',
   })
 })
 
@@ -100,8 +96,42 @@ router.get('/removeimage', auth, admin, (req, res) => {
   cloudinary.uploader.destroy(public_id, (error, result) => {
     if (error) return res.json({success:false, error});
     res.status(200).send('OK');
-    console.log('remove :>> ', public_id);
   })
+});
+
+router.post('/add_to_basket', auth, async (req, res) => {
+  try {
+    const user = await User.findOne({_id:req.user._id})
+    let duplicate = false;
+    user.basket.forEach(item => {
+      if (item.id == req.query.id) {
+        duplicate = true;
+      }
+    })
+    if (user){
+      if (duplicate) {
+        const u = await User.findOneAndUpdate(
+          {_id:req.user._id, "basket.id": mongooseTypes.ObjectId(req.query.id)},
+          {$inc: {"basket.$.quantity": 1}},
+          {upsert:true}
+        )
+        
+        await u.save()
+      }
+      else {
+        await user.updateOne({$push:{basket: {
+          id: mongooseTypes.ObjectId(req.query.id),
+          quantity: 1,
+          date: Date.now()
+        }}}, {upsert:true})
+      
+        await user.save()
+      }
+    }
+    res.status(200).json(user.basket)
+  } catch (error) {
+      res.send({ success: false, error: error.message })
+  }
 })
 
 module.exports = router;

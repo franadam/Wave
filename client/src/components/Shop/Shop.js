@@ -2,10 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
 
-import ShopHeader from './ShopHeader'
+import ShopHeader from '../UI/PageTop/PageTop'
 import CollapseCheckbox from '../UI/CollapseCheckbox/CollapseCheckbox'
 
 import {fetchBrands, fetchWoods, purchaseGuitars} from '../../store/actions'
+import { objectToArray } from '../../utils/objectTransorm';
 import { frests, price } from '../../utils/filterCategories'
 import CollapseRadio from '../UI/CollapseRadio/CollapseRadio'
 import LoadMoreCards from './LoadMoreCards';
@@ -90,7 +91,7 @@ export class Shop extends Component {
             <CollapseCheckbox 
               initState={true}
               title='Brands'
-              list={products.brands}
+              list={objectToArray(products.brands)}
               handleFilter= {(filter) => this.handleFilter(filter, 'brand')}
             />
             <CollapseCheckbox 
@@ -102,7 +103,7 @@ export class Shop extends Component {
             <CollapseCheckbox 
               initState={false}
               title='Woods'
-              list={products.woods}
+              list={objectToArray(products.woods)}
               handleFilter= {(filter) => this.handleFilter(filter, 'wood')}
             />
             <CollapseRadio 

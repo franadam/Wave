@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import Card from '../Card/Card'
 
 const CradsBlock = ({list, title}) => {
-  const renderCards = (cards) => (
+  const renderCards = (cards=[]) => (
     cards.length
     ? cards.map((card, idx) => 
     (

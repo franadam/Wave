@@ -1,8 +1,8 @@
 import axios from 'axios';
 
-import { errorAuth, clearError } from './';
+import { errorAuth, errorUsers ,clearError } from './';
 
-import { AUTH_SIGNIN, AUTH_SIGNUP, AUTH_LOGOUT, USER_READ } from './types';
+import { AUTH_SIGNIN, AUTH_SIGNUP, AUTH_LOGOUT, USER_READ, USER_ADD_GUITAR_TO_BASKET } from './types';
 
 const authSignin = (success) => ({
   type: AUTH_SIGNIN,
@@ -22,6 +22,11 @@ const authLogout = (success) => ({
 const userRead = (user) => ({
   type: USER_READ,
   user,
+});
+
+const userAddGuitarToBasket = (basket) => ({
+  type: USER_ADD_GUITAR_TO_BASKET,
+  basket,
 });
 
 export const signin = (credential) => async (dispatch) => {
@@ -67,5 +72,16 @@ export const fetchCurrentUser = () => async (dispatch) => {
     dispatch(userRead(res.data));
   } catch (error) {
     dispatch(errorAuth(error.message));
+  }
+};
+
+export const addGuitarToBasket = (id) => async (dispatch) => {
+  try {
+    const res = await axios.post(`/api/users/add_to_basket?id=${id}`);
+    if (res.data.error) throw new Error(res.data.error);
+    dispatch(userAddGuitarToBasket(res.data));
+    dispatch(clearError('user'));
+  } catch (error) {
+    dispatch(errorUsers(error.message));
   }
 };
