@@ -1,5 +1,5 @@
 const express = require('express');
-const mongoose = require('mongoose');
+const mongooseTypes = require('mongoose').Types;
 
 const Guitar = require('../models/Guitar');
 
@@ -43,12 +43,20 @@ router.get('/', async (req, res) => {
   }
 });
 
-router.get('/:id', async (req, res) => {
+router.get('/guitars_by_id', async (req, res) => {
   try {
-    const id = req.params.id;
-    const guitar = await Guitar.findById(id).populate('brand').populate('wood');
-    if (!guitar) throw new Error('No guitar found');
-    res.status(200).json({ success: true, guitar });
+    let {ids, type} = req.query;
+
+    if (type === 'array') {
+      ids = id.split(',').map(id => mongooseTypes.ObjectId(id))
+    }
+
+    const guitars = await Guitar.find({"_id":{$in:ids}})
+    .populate('brand')
+    .populate('wood');
+    
+    if (!guitars) throw new Error('No guitars found');
+    res.status(200).json({ success: true, guitars });
   } catch (error) {
     res.status(400).json({ success: false, error: error.message });
   }

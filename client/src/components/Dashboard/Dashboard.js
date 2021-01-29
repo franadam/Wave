@@ -10,9 +10,9 @@ const Dashboard = ({ user }) => {
         <div className="user_nfo_panel">
           <h1>User Information</h1>
           <div>
-            <span>{user.info.firstname}</span>
-            <span>{user.info.lastname}</span>
-            <span>{user.info.email}</span>
+            <span>Firstname: {user.info.firstname}</span>
+            <span>Lastname: {user.info.lastname}</span>
+            <span>Email: {user.info.email}</span>
           </div>
           <Button type="default" title="Edit profile" linkTo="/user/profile" />
         </div>

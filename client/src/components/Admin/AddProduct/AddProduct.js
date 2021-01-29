@@ -262,32 +262,26 @@ export class AddProduct extends Component {
         <div>
           <h1>Add Product</h1>
           <form onSubmit={(event) => this.submitForm(event)}>
-          
-            <FileUpload 
+            <FileUpload
               imageHandler={(images) => this.imageHandler(images)}
               reset={this.state.formSuccess}
             />
             {createFormFields(formData, this.updateInput)}
 
-            {
-              this.state.formSuccess
-              ? <div className="form_success">
-                Success...
-              </div>
-              : null
-            }
+            {this.state.formSuccess ? (
+              <div className="form_success">Success...</div>
+            ) : null}
 
-          {this.state.formError ? (
-            <div className="error_label">Please check your data</div>
-          ) : null}
-          <button type="submit" onClick={(event) => this.submitForm(event)}>
-            Add Product
-          </button>
-            
+            {this.state.formError ? (
+              <div className="error_label">Please check your data</div>
+            ) : null}
+            <button type="submit" onClick={(event) => this.submitForm(event)}>
+              Add Product
+            </button>
           </form>
         </div>
       </UserLayout>
-    )
+    );
   }
 }
 

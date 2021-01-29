@@ -78,6 +78,21 @@ router.post('/signin', async (req, res) => {
   }
 });
 
+router.post('/edit_profile', auth, async (req, res) => {
+  try {
+  const user = await User.findOneAndUpdate(
+    {_id:req.user._id},
+    {$set: req.body},
+    {upsert:true}
+  )
+  await user.save()
+  console.log('user :>> ', user);
+  res.status(200).json({ success: true, user });
+  } catch (error) {
+    res.send({ success: false, error: error.message });
+  }
+})
+
 router.post('/uploadimage', auth, admin, formidable(), (req, res) => {
   cloudinary.uploader.upload(req.files.file.path, (result) => {
     res.status(200).send({
@@ -129,6 +144,24 @@ router.post('/add_to_basket', auth, async (req, res) => {
       }
     }
     res.status(200).json(user.basket)
+  } catch (error) {
+      res.send({ success: false, error: error.message })
+  }
+})
+
+router.post('/remove_from_basket', auth, async (req, res) => {
+  try {
+    const user = await User.findOneAndUpdate(
+      {_id:req.user._id},
+      {$pull:
+        { basket: { id: mongooseTypes.ObjectId(req.query.id) } }
+      },
+      {upsert:true}
+    )
+    await user.save();
+    res.status(200).json(user.basket);
+    console.log('user.basket :>> ', req.query.id, user.basket);
+    console.log('user :>> ', user);
   } catch (error) {
       res.send({ success: false, error: error.message })
   }

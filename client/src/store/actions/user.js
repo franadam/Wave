@@ -2,7 +2,7 @@ import axios from 'axios';
 
 import { errorAuth, errorUsers ,clearError } from './';
 
-import { AUTH_SIGNIN, AUTH_SIGNUP, AUTH_LOGOUT, USER_READ, USER_ADD_GUITAR_TO_BASKET } from './types';
+import { AUTH_SIGNIN, AUTH_SIGNUP, AUTH_LOGOUT, USER_READ, USER_ADD_GUITAR_TO_BASKET, USER_READ_BASKET, USER_DELETE_BASKET_ITEM, USER_UPDATE } from './types';
 
 const authSignin = (success) => ({
   type: AUTH_SIGNIN,
@@ -24,10 +24,25 @@ const userRead = (user) => ({
   user,
 });
 
-const userAddGuitarToBasket = (basket) => ({
-  type: USER_ADD_GUITAR_TO_BASKET,
-  basket,
+const userUpdate = (user) => ({
+  type: USER_UPDATE,
+  user,
 });
+
+const userAddGuitarToBasket = (id) => ({
+  type: USER_ADD_GUITAR_TO_BASKET,
+  id,
+});
+
+const userDeleteGuitarFromBasket = (id) => ({
+  type: USER_DELETE_BASKET_ITEM,
+  id
+})
+
+export const fetchBasketDetails = (basket) => ({
+  type: USER_READ_BASKET,
+  basket,
+})
 
 export const signin = (credential) => async (dispatch) => {
   try {
@@ -75,11 +90,33 @@ export const fetchCurrentUser = () => async (dispatch) => {
   }
 };
 
+export const editUser = (credential) => async (dispatch) => {
+  try {
+    const res = await axios.post(`/api/users/edit_profile`, credential);
+    const {success, user, error} = res.data;
+    if (error||success) throw new Error(error);
+    dispatch(userUpdate(user));
+  } catch (error) {
+    dispatch(errorAuth(error.message));
+  }
+};
+
 export const addGuitarToBasket = (id) => async (dispatch) => {
   try {
     const res = await axios.post(`/api/users/add_to_basket?id=${id}`);
     if (res.data.error) throw new Error(res.data.error);
-    dispatch(userAddGuitarToBasket(res.data));
+    dispatch(userAddGuitarToBasket(id));
+    dispatch(clearError('user'));
+  } catch (error) {
+    dispatch(errorUsers(error.message));
+  }
+}
+
+export const deleteGuitarFromBasket = (id) => async (dispatch) => {
+  try {
+    const res = await axios.post(`/api/users/remove_from_basket?id=${id}`);
+    if (res.data.error) throw new Error(res.data.error);
+    dispatch(userDeleteGuitarFromBasket( id));
     dispatch(clearError('user'));
   } catch (error) {
     dispatch(errorUsers(error.message));

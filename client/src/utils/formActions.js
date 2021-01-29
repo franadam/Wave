@@ -159,7 +159,20 @@ export const populateOptionsField = (formData, array=[], field) => {
   const newFormData = {...formData};
   const newArray = array.map(item => ({key:item._id, value:item.name}));
   newFormData[field].config.options = newArray;
-  return newFormData
+  return newFormData;
+}
+
+export const populateFields = (formData, fieldsValue) => {
+  const newFormData = {...formData};
+
+  for (let key in newFormData) {
+    newFormData[key].value = fieldsValue[key];
+    newFormData[key].valid = true;
+    newFormData[key].touched = true;
+    newFormData[key].validationMessage = '';
+  }
+
+  return newFormData;
 }
 
 export const resetFields = (formData, formName) => {
@@ -177,5 +190,5 @@ export const resetFields = (formData, formName) => {
     newFormData[key].validationMessage = '';
   }
 
-  return newFormData
+  return newFormData;
 }

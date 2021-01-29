@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Dashboard from '../Dashboard/Dashboard';
 import AddProduct from '../Admin/AddProduct/AddProduct';
 import ManageCategories from '../Admin/ManageCategories/ManageCategories';
+import Basket from '../Admin/Basket/Basket';
 
 import Layout from '../../hoc/Layout/Layout';
 import AuthenticationCheck from '../../hoc/Authentication/AuthenticationCheck';
@@ -12,6 +13,7 @@ import Authentication from '../Authentication/Authentication';
 import Signup from '../Authentication/Signup/Signup';
 import Shop from '../Shop/Shop';
 import Guitar from '../Guitar/Guitar';
+import EditProfile from '../Dashboard/EditProfile/EditProfile';
 
 export const Routes = () => {
   return (
@@ -21,6 +23,16 @@ export const Routes = () => {
           path="/user/dashboard"
           exact
           component={AuthenticationCheck(Dashboard, true)}
+        />
+        <Route
+          path="/user/basket"
+          exact
+          component={AuthenticationCheck(Basket, true)}
+        />
+        <Route
+          path="/user/profile"
+          exact
+          component={AuthenticationCheck(EditProfile, true)}
         />
         <Route
           path="/admin/add_product"

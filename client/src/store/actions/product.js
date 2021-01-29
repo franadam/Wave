@@ -2,7 +2,18 @@ import axios from 'axios';
 
 import { errorProducts, clearError } from './';
 
-import {FETCH_GUITARS, FETCH_GUITARS_BY_ARRIVAL, FETCH_GUITARS_BY_SELL, FETCH_BRANDS, FETCH_WOODS, PURCHASE_GUITARS, GUITAR_CREATE, CLEAR_GUITAR, BRAND_CREATE, WOOD_CREATE } from './types';
+import {
+  FETCH_GUITARS,
+  FETCH_GUITARS_BY_ARRIVAL,
+  FETCH_GUITARS_BY_SELL, 
+  FETCH_BRANDS, 
+  FETCH_WOODS, 
+  PURCHASE_GUITARS, 
+  GUITAR_CREATE, 
+  CLEAR_GUITAR, 
+  BRAND_CREATE, 
+  WOOD_CREATE 
+} from './types';
 
 const getGuitars = (guitars) => ({
   type: FETCH_GUITARS,

@@ -1,4 +1,4 @@
-export { signin, signup, logout, fetchCurrentUser, addGuitarToBasket } from './user';
+export { signin, signup, logout, fetchCurrentUser, addGuitarToBasket, fetchBasketDetails, deleteGuitarFromBasket, editUser } from './user';
 
 export {fetchGuitars, fetchWoods, fetchBrands, getGuitarsByArrival, getGuitarsBySell, purchaseGuitars, addGuitar, clearGuitar, addBrand, addWood} from './product';
 
