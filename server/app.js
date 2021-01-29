@@ -7,6 +7,7 @@ const brandsRouter = require('./routes/brands');
 const woodsRouter = require('./routes/woods');
 const guitarsRouter = require('./routes/guitars');
 const shopRouter = require('./routes/shop');
+const sitesRouter = require('./routes/sites');
 
 const app = express();
 
@@ -19,5 +20,6 @@ app.use('/api/products/brands', brandsRouter);
 app.use('/api/products/woods', woodsRouter);
 app.use('/api/products/guitars', guitarsRouter);
 app.use('/api/products/shop', shopRouter);
+app.use('/api/sites', sitesRouter);
 
 module.exports = app;

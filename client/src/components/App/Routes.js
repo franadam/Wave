@@ -5,6 +5,7 @@ import Dashboard from '../Dashboard/Dashboard';
 import AddProduct from '../Admin/AddProduct/AddProduct';
 import ManageCategories from '../Admin/ManageCategories/ManageCategories';
 import Basket from '../Admin/Basket/Basket';
+import ManageSiteInfo from '../Admin/SiteInfo/ManageSiteInfo';
 
 import Layout from '../../hoc/Layout/Layout';
 import AuthenticationCheck from '../../hoc/Authentication/AuthenticationCheck';
@@ -43,6 +44,11 @@ export const Routes = () => {
           path="/admin/manage_categories"
           exact
           component={AuthenticationCheck(ManageCategories, true)}
+        />
+        <Route
+          path="/admin/site_info"
+          exact
+          component={AuthenticationCheck(ManageSiteInfo, true)}
         />
 
         <Route path="/guitar/:id" exact component={AuthenticationCheck(Guitar, null)} />

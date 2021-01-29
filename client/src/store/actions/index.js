@@ -2,4 +2,6 @@ export { signin, signup, logout, fetchCurrentUser, addGuitarToBasket, fetchBaske
 
 export {fetchGuitars, fetchWoods, fetchBrands, getGuitarsByArrival, getGuitarsBySell, purchaseGuitars, addGuitar, clearGuitar, addBrand, addWood} from './product';
 
-export { errorAuth, errorUsers,errorProducts, clearError } from './error';
+export {fetchSiteInfo, editSiteInfo} from './site'
+
+export { errorAuth, errorUsers,errorProducts, errorSiteInfo, clearError } from './error';

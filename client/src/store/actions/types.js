@@ -32,7 +32,13 @@ export const WOOD_CREATE = 'WOOD_CREATE';
 export const WOOD_UPDATE = 'WOOD_UPDATE';
 export const WOOD_DELETE = 'WOOD_DELETE';
 
+export const FETCH_SITE_INFO = 'FETCH_SITE_INFO';
+export const SITE_INFO_CREATE = 'SITE_INFO_CREATE';
+export const SITE_INFO_UPDATE = 'SITE_INFO_UPDATE';
+export const SITE_INFO_DELETE = 'SITE_INFO_DELETE';
+
 export const ERROR_AUTH = 'ERROR_AUTH';
 export const ERROR_USER = 'ERROR_USER';
 export const ERROR_PRODUCT = 'ERROR_PRODUCT';
+export const ERROR_SITE_INFO = 'ERROR_SITE_INFO';
 export const CLEAR_ERROR = 'CLEAR_ERROR';

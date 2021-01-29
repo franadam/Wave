@@ -94,7 +94,7 @@ export const editUser = (credential) => async (dispatch) => {
   try {
     const res = await axios.post(`/api/users/edit_profile`, credential);
     const {success, user, error} = res.data;
-    if (error||success) throw new Error(error);
+    if (error||!success) throw new Error(error);
     dispatch(userUpdate(user));
   } catch (error) {
     dispatch(errorAuth(error.message));
