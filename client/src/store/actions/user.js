@@ -2,7 +2,16 @@ import axios from 'axios';
 
 import { errorAuth, errorUsers ,clearError } from './';
 
-import { AUTH_SIGNIN, AUTH_SIGNUP, AUTH_LOGOUT, USER_READ, USER_ADD_GUITAR_TO_BASKET, USER_READ_BASKET, USER_DELETE_BASKET_ITEM, USER_UPDATE } from './types';
+import {
+  AUTH_SIGNIN,
+  AUTH_SIGNUP,
+  AUTH_LOGOUT,
+  USER_READ,
+  USER_ADD_GUITAR_TO_BASKET,
+  USER_READ_BASKET,
+  USER_DELETE_BASKET_ITEM,
+  USER_UPDATE,
+} from './types';
 
 const authSignin = (success) => ({
   type: AUTH_SIGNIN,
@@ -72,7 +81,6 @@ export const logout = () => async (dispatch) => {
   try {
     const res = await axios.get(`/api/users/logout`);
     const { success, error } = res.data;
-    console.log('res.data :>> ', res.data);
     dispatch(authLogout(success));
     dispatch(clearError('auth'));
     if (error) throw new Error(error);

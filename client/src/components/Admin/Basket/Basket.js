@@ -42,7 +42,6 @@ export class Basket extends Component {
   }
 
   removeItemFromBasket = (id) => {
-    console.log('removeItemFromBasket id :>> ', id);
     this.props.onDeleteGuitarFromBasket(id)
     this.setState({loading:false})
     if (this.props.user.info.basket.length > 0)

@@ -26,13 +26,13 @@ const reducer = (state = initialState, { type, success, user, basket, id }) => {
       return { ...state, signup: success };
 
     case USER_READ:
-      return { ...state, info: user, signup: true, signin: true };
+      return { ...state, info: {...state.info, ...user} };
 
     case AUTH_LOGOUT:
-      return { ...state, logout: success };
+      return { ...initialState, signup: true, logout: success };
 
     case USER_UPDATE:
-      return {...state, info: user}
+      return {...state, info: {...state.info, ...user}}
 
     case USER_ADD_GUITAR_TO_BASKET:
       return { ...state, info: {...state.info, basket:[...state.info.basket, id] }};

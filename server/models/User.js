@@ -85,7 +85,6 @@ userSchema.statics.findByToken = async function (token, callback) {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const u = await user.findOne({ _id: decoded, token });
     callback(null, u);
-    if (!u) throw new Error('Please authenticate');
   } catch (error) {
     return callback(error);
   }

@@ -15,6 +15,7 @@ import Signup from '../Authentication/Signup/Signup';
 import Shop from '../Shop/Shop';
 import Guitar from '../Guitar/Guitar';
 import EditProfile from '../Dashboard/EditProfile/EditProfile';
+import NotFoundPage from '../UI/404/NotFoundPage';
 
 export const Routes = () => {
   return (
@@ -69,7 +70,8 @@ export const Routes = () => {
         component={AuthenticationCheck(Shop, null)} 
 
         />
-        <Redirect to="/auth" />
+        <Route path="/" exact component={AuthenticationCheck(Home, null)} />
+        <Route component={AuthenticationCheck(NotFoundPage, null)} />
       </Switch>
     </Layout>
   );

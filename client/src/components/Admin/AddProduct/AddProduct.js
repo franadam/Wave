@@ -221,12 +221,10 @@ export class AddProduct extends Component {
       this.state.formData,
       'add_product'
     );
-    console.log('add Product :>> ', dataToSubmit);
 
     if (isValid) {
       this.props.onAddGuitar(dataToSubmit);
       //this.props.history.push('/user/dashboard');
-      console.log('add Product :>> ', dataToSubmit);
       const newFormData = resetFields(this.state.formData, 'product')
       this.setState({
         formData: newFormData,
@@ -246,7 +244,6 @@ export class AddProduct extends Component {
   }
 
   imageHandler = (images) => {
-    console.log('images :>> ', images);
     const formData = {...this.state.formData}
     formData.images.value = images
     formData.images.valid = true

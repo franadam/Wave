@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
+import Header from '../../components/UI/Header/Header';
+import Footer from '../../components/UI/Footer/Footer';
 
 import { connect } from 'react-redux'
 import { fetchSiteInfo } from '../../store/actions';

@@ -81,10 +81,9 @@ export class EditProfilePersonalInfo extends Component {
       'edit_profile'
     );
 
-    console.log('dataToSubmit, isValid :>> ', dataToSubmit, isValid);
     if (isValid) {
       setTimeout(() => {
-        this.props.history.push('/dashboard');
+        this.props.history.push('/user/dashboard');
       }, 3000);
       this.setState({
         formError: false,

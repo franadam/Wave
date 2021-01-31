@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 
-import { logout } from '../../store/actions';
+import { logout } from '../../../store/actions';
 
 export class Header extends Component {
   state = {
@@ -44,12 +44,9 @@ export class Header extends Component {
   };
 
   logoutHandler = () => {
-    const { onLogout, logout, history } = this.props;
+    const { onLogout, history } = this.props;
     onLogout();
-    console.log('this.props :>> ', this.props);
-    if (logout) {
-      history.push('/');
-    }
+    history.push('/');
   };
 
   defaultLink = (link) =>

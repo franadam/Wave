@@ -13,18 +13,20 @@ export default function (Cpt, reload, adminRoute) {
     };
 
     componentDidMount() {
+      if (!Object.keys(this.props.user.info).length)
       this.props.fetchCurrentUser();
-
-      if (!this.props.user.info.isAuth || this.props.user.logout) {
+      if (!this.props.user.info.isAuth) {
+        console.log('!this.props.user.info.isAuth');
         if (reload) {
           this.props.history.push('/auth');
         }
       } else {
         if (adminRoute && this.props.user.info.isAdmin) {
+          console.log('adminRoute && this.props.user.info.isAdmin');
           this.props.history.push('/user/dashboard');
         } else {
           if (reload === false) {
-            this.props.history.push('/user/dashboard');
+            this.props.history.push('/');
           }
         }
       }
@@ -46,8 +48,6 @@ export default function (Cpt, reload, adminRoute) {
   const mapStateToProps = ({ user }) => ({
     user,
   });
-
-  const mapDispatchToProps = {};
 
   AuthenticationCheck.propTypes = {
     user: PropTypes.object,

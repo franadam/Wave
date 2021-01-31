@@ -15,6 +15,7 @@ cloudinary.config({
 const router = express.Router();
 
 router.get('/auth', auth, (req, res) => {
+  try {
   const { email, lastname, firstname, basket, history, role } = req.user;
   res.status(200).json({
     isAdmin: role === 0 ? false : true,
@@ -25,6 +26,9 @@ router.get('/auth', auth, (req, res) => {
     basket,
     history,
   });
+  } catch (error) {
+    res.status(400).send({ success: false, error: error.message });
+  }
 });
 
 router.get('/logout', auth, async (req, res) => {
@@ -82,12 +86,11 @@ router.post('/edit_profile', auth, async (req, res) => {
   try {
   const user = await User.findOneAndUpdate(
     {_id:req.user._id},
-    {$set: req.body},
+    {"$set": req.body},
     {upsert:true}
   )
   await user.save()
-  console.log('user :>> ', user);
-  res.status(200).json({ success: true, user });
+  res.status(200).json({ success: true, user: req.body });
   } catch (error) {
     res.send({ success: false, error: error.message });
   }

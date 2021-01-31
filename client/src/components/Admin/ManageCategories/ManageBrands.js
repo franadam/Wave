@@ -66,7 +66,6 @@ export class ManageBrands extends Component {
     if (isValid) {
       this.props.onAddBrand(dataToSubmit);
       //this.props.history.push('/user/dashboard');
-      console.log('manage Brand :>> ', dataToSubmit);
       const newFormData = resetFields(this.state.formData, 'brand')
       this.setState({
         formData: newFormData,

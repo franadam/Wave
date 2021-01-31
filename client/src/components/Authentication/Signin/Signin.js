@@ -65,9 +65,14 @@ export class Signin extends Component {
     );
 
     if (isValid) {
+      setTimeout(() => {
+        this.props.history.push('/user/dashboard');
+      }, 5000);
+      this.setState({
+        formError: false,
+        formSuccess: true,
+      });
       this.props.onSingin(dataToSubmit);
-      this.props.history.push('/user/dashboard');
-      console.log('signin :>> ', dataToSubmit);
     } else {
       this.setState({
         formError: true,
@@ -80,6 +85,10 @@ export class Signin extends Component {
       <div className="signin_wrapper">
         <form onSubmit={(event) => this.submitForm(event)}>
           {createFormFields(this.state.formData, this.updateInput)}
+
+          {this.state.formSuccess ? (
+            <div className="form_success">Success...</div>
+          ) : null}
 
           {this.state.formError ? (
             <div className="error_label">Please check your data</div>

@@ -104,10 +104,9 @@ export class EditSiteInfo extends Component {
       'edit_site_info'
     );
 
-    console.log('dataToSubmit, isValid :>> ', dataToSubmit, isValid);
     if (isValid) {
       setTimeout(() => {
-        this.props.history.push('/dashboard');
+        this.props.history.push('/user/dashboard');
       }, 3000);
       this.setState({
         formError: false,

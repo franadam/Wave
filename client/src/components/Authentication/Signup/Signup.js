@@ -115,7 +115,6 @@ export class Signup extends Component {
       'signup'
     );
 
-    console.log('dataToSubmit, isValid :>> ', dataToSubmit, isValid);
     if (isValid) {
       setTimeout(() => {
         this.props.history.push('/signin');
